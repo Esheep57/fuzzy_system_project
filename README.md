@@ -19,6 +19,7 @@
 
 ## 專案結構
 
+```
 fuzzy_system_project/
 ├── README.md
 ├── requirements.txt
@@ -34,7 +35,7 @@ fuzzy_system_project/
 │   └── training_data.xlsx
 └── tests/
     └── test_parser.py
-
+```
 
 - **README.md**：專案說明文件。
 - **requirements.txt**：專案所需的 Python 套件。
