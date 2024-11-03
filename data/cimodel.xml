@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fuzzySystem xmlns="http://www.ieee1855.org" name="台語互動學習推薦" networkAddress="127.0.0.1">
     <knowledgeBase networkAddress="127.0.0.1">
-        <fuzzyVariable name="KUWA_score" scale="分" domainleft="0.0" domainright="10.0" type="input" accumulation="MAX" defuzzifier="COG" defaultValue="0.0" networkAddress="127.0.0.1">
-            <fuzzyTerm name="Very_Low" complement="false">
-                <trapezoidShape param1="0" param2="0" param3="2" param4="3"/>
-            </fuzzyTerm>
-            <fuzzyTerm name="Low" complement="false">
-                <trapezoidShape param1="2" param2="3" param3="4" param4="5"/>
-            </fuzzyTerm>
-            <fuzzyTerm name="Medium" complement="false">
-                <trapezoidShape param1="4" param2="5" param3="6" param4="7"/>
-            </fuzzyTerm>
-            <fuzzyTerm name="High" complement="false">
-                <trapezoidShape param1="6" param2="7" param3="8" param4="9"/>
-            </fuzzyTerm>
-            <fuzzyTerm name="Very_High" complement="false">
-                <trapezoidShape param1="8" param2="9" param3="10" param4="10"/>
-            </fuzzyTerm>
-        </fuzzyVariable>
         <fuzzyVariable name="BCI_weighted" scale="分" domainleft="0.0" domainright="10.0" type="input" accumulation="MAX" defuzzifier="COG" defaultValue="0.0" networkAddress="127.0.0.1">
-            <fuzzyTerm name="Very_Low" complement="false">
-                <trapezoidShape param1="0" param2="0" param3="2" param4="3"/>
-            </fuzzyTerm>
             <fuzzyTerm name="Low" complement="false">
-                <trapezoidShape param1="2" param2="3" param3="4" param4="5"/>
+                <trapezoidShape param1="0" param2="0" param3="4" param4="5"/>
             </fuzzyTerm>
             <fuzzyTerm name="Medium" complement="false">
-                <trapezoidShape param1="4" param2="5" param3="6" param4="7"/>
+                <trapezoidShape param1="4" param2="5" param3="7" param4="8"/>
             </fuzzyTerm>
             <fuzzyTerm name="High" complement="false">
-                <trapezoidShape param1="6" param2="7" param3="8" param4="9"/>
-            </fuzzyTerm>
-            <fuzzyTerm name="Very_High" complement="false">
-                <trapezoidShape param1="8" param2="9" param3="10" param4="10"/>
+                <trapezoidShape param1="7" param2="8" param3="10" param4="10"/>
             </fuzzyTerm>
         </fuzzyVariable>
-        <fuzzyVariable name="JenPin_score" scale="分" domainleft="0.0" domainright="100.0" type="input" accumulation="MAX" defuzzifier="COG" defaultValue="0.0" networkAddress="127.0.0.1">
+        <fuzzyVariable name="JenPin_score" scale="分" domainleft="0.0" domainright="10.0" type="input" accumulation="MAX" defuzzifier="COG" defaultValue="0.0" networkAddress="127.0.0.1">
             <fuzzyTerm name="Needs_Improvement" complement="false">
-                <trapezoidShape param1="0" param2="0" param3="55" param4="65"/>
+                <trapezoidShape param1="0" param2="0" param3="5.5" param4="6.5"/>
             </fuzzyTerm>
             <fuzzyTerm name="Good" complement="false">
-                <trapezoidShape param1="55" param2="65" param3="75" param4="85"/>
+                <trapezoidShape param1="5.5" param2="6.5" param3="7.5" param4="8.5"/>
             </fuzzyTerm>
             <fuzzyTerm name="Excellent" complement="false">
-                <trapezoidShape param1="75" param2="85" param3="100" param4="100"/>
+                <trapezoidShape param1="7.5" param2="8.5" param3="10" param4="10"/>
+            </fuzzyTerm>
+        </fuzzyVariable>
+        <fuzzyVariable name="Recognition_score" scale="分" domainleft="0.0" domainright="10.0" type="input" accumulation="MAX" defuzzifier="COG" defaultValue="0.0" networkAddress="127.0.0.1">
+            <fuzzyTerm name="Low" complement="false">
+                <trapezoidShape param1="0" param2="0" param3="5" param4="6"/>
+            </fuzzyTerm>
+            <fuzzyTerm name="Medium" complement="false">
+                <trapezoidShape param1="5" param2="6" param3="7" param4="8"/>
+            </fuzzyTerm>
+            <fuzzyTerm name="High" complement="false">
+                <trapezoidShape param1="7" param2="8" param3="10" param4="10"/>
+            </fuzzyTerm>
+        </fuzzyVariable>
+        <fuzzyVariable name="Semantic_score" scale="分" domainleft="0.0" domainright="10.0" type="input" accumulation="MAX" defuzzifier="COG" defaultValue="0.0" networkAddress="127.0.0.1">
+            <fuzzyTerm name="Low" complement="false">
+                <trapezoidShape param1="0" param2="0" param3="3" param4="4"/>
+            </fuzzyTerm>
+            <fuzzyTerm name="Medium" complement="false">
+                <trapezoidShape param1="3" param2="4" param3="7" param4="8"/>
+            </fuzzyTerm>
+            <fuzzyTerm name="High" complement="false">
+                <trapezoidShape param1="7" param2="8" param3="10" param4="10"/>
             </fuzzyTerm>
         </fuzzyVariable>
         <fuzzyVariable name="Student_level" scale="分" domainleft="0.0" domainright="10.0" type="output" accumulation="MAX" defuzzifier="COG" defaultValue="0.0" networkAddress="127.0.0.1">
@@ -68,16 +67,20 @@
         <rule name="RULE-1" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -92,16 +95,20 @@
         <rule name="RULE-2" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Good</term>
+                    <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -116,16 +123,20 @@
         <rule name="RULE-3" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -140,10 +151,6 @@
         <rule name="RULE-4" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
                     <term>Low</term>
                 </clause>
@@ -151,12 +158,20 @@
                     <variable>JenPin_score</variable>
                     <term>Needs_Improvement</term>
                 </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
+                </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Beginner</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -164,23 +179,27 @@
         <rule name="RULE-5" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
                     <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Good</term>
+                    <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Basic</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -188,23 +207,27 @@
         <rule name="RULE-6" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
                     <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Basic</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -212,23 +235,27 @@
         <rule name="RULE-7" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Medium</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Beginner</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -236,23 +263,27 @@
         <rule name="RULE-8" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Medium</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Good</term>
+                    <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Basic</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -260,23 +291,27 @@
         <rule name="RULE-9" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Medium</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Basic</term>
+                        <term>Advanced</term>
                     </clause>
                 </then>
             </consequent>
@@ -284,23 +319,27 @@
         <rule name="RULE-10" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>High</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Beginner</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -308,23 +347,27 @@
         <rule name="RULE-11" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>High</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Basic</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -332,23 +375,27 @@
         <rule name="RULE-12" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>High</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Basic</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -356,23 +403,27 @@
         <rule name="RULE-13" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Beginner</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -380,23 +431,27 @@
         <rule name="RULE-14" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Basic</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -404,23 +459,27 @@
         <rule name="RULE-15" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Basic</term>
+                        <term>Advanced</term>
                     </clause>
                 </then>
             </consequent>
@@ -428,23 +487,27 @@
         <rule name="RULE-16" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>Low</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
+                    <variable>JenPin_score</variable>
+                    <term>Good</term>
                 </clause>
                 <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Basic</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -452,23 +515,27 @@
         <rule name="RULE-17" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Intermediate</term>
+                        <term>Advanced</term>
                     </clause>
                 </then>
             </consequent>
@@ -476,16 +543,48 @@
         <rule name="RULE-18" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>Low</term>
                 </clause>
                 <clause>
+                    <variable>JenPin_score</variable>
+                    <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
+                </clause>
+            </antecedent>
+            <consequent>
+                <then>
+                    <clause>
+                        <variable>Student_level</variable>
+                        <term>Advanced</term>
+                    </clause>
+                </then>
+            </consequent>
+        </rule>
+        <rule name="RULE-19" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+            <antecedent>
+                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -497,43 +596,23 @@
                 </then>
             </consequent>
         </rule>
-        <rule name="RULE-19" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
-            <antecedent>
-                <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Low</term>
-                </clause>
-                <clause>
-                    <variable>BCI_weighted</variable>
-                    <term>Low</term>
-                </clause>
-                <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
-                </clause>
-            </antecedent>
-            <consequent>
-                <then>
-                    <clause>
-                        <variable>Student_level</variable>
-                        <term>Basic</term>
-                    </clause>
-                </then>
-            </consequent>
-        </rule>
         <rule name="RULE-20" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
                     <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Good</term>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -548,10 +627,6 @@
         <rule name="RULE-21" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
                     <term>Low</term>
                 </clause>
@@ -559,12 +634,20 @@
                     <variable>JenPin_score</variable>
                     <term>Excellent</term>
                 </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
+                </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Intermediate</term>
+                        <term>Advanced</term>
                     </clause>
                 </then>
             </consequent>
@@ -572,23 +655,27 @@
         <rule name="RULE-22" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>Low</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
+                    <variable>JenPin_score</variable>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
                     <term>Medium</term>
                 </clause>
                 <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Beginner</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -596,23 +683,27 @@
         <rule name="RULE-23" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>Low</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
+                    <variable>JenPin_score</variable>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
                     <term>Medium</term>
                 </clause>
                 <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Good</term>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Basic</term>
+                        <term>Advanced</term>
                     </clause>
                 </then>
             </consequent>
@@ -620,23 +711,27 @@
         <rule name="RULE-24" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Medium</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Intermediate</term>
+                        <term>Proficient</term>
                     </clause>
                 </then>
             </consequent>
@@ -644,23 +739,27 @@
         <rule name="RULE-25" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>Low</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
+                    <variable>JenPin_score</variable>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
                     <term>High</term>
                 </clause>
                 <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Beginner</term>
+                        <term>Advanced</term>
                     </clause>
                 </then>
             </consequent>
@@ -668,23 +767,27 @@
         <rule name="RULE-26" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>Low</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
+                    <variable>JenPin_score</variable>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
                     <term>High</term>
                 </clause>
                 <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Good</term>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Basic</term>
+                        <term>Proficient</term>
                     </clause>
                 </then>
             </consequent>
@@ -692,23 +795,27 @@
         <rule name="RULE-27" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>High</term>
+                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Intermediate</term>
+                        <term>Proficient</term>
                     </clause>
                 </then>
             </consequent>
@@ -716,16 +823,20 @@
         <rule name="RULE-28" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
+                    <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -740,16 +851,20 @@
         <rule name="RULE-29" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
+                    <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Good</term>
+                    <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -764,23 +879,27 @@
         <rule name="RULE-30" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Low</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
+                    <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Intermediate</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -788,23 +907,27 @@
         <rule name="RULE-31" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Medium</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
+                    <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Intermediate</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -812,23 +935,27 @@
         <rule name="RULE-32" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>Medium</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
+                    <variable>JenPin_score</variable>
+                    <term>Needs_Improvement</term>
                 </clause>
                 <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Good</term>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Intermediate</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -836,40 +963,20 @@
         <rule name="RULE-33" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Medium</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Excellent</term>
-                </clause>
-            </antecedent>
-            <consequent>
-                <then>
-                    <clause>
-                        <variable>Student_level</variable>
-                        <term>Advanced</term>
-                    </clause>
-                </then>
-            </consequent>
-        </rule>
-        <rule name="RULE-34" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
-            <antecedent>
-                <clause>
-                    <variable>KUWA_score</variable>
                     <term>Medium</term>
-                </clause>
-                <clause>
-                    <variable>BCI_weighted</variable>
-                    <term>Low</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -881,19 +988,51 @@
                 </then>
             </consequent>
         </rule>
-        <rule name="RULE-35" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+        <rule name="RULE-34" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>Medium</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
+                    <variable>JenPin_score</variable>
+                    <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
                     <term>Low</term>
+                </clause>
+            </antecedent>
+            <consequent>
+                <then>
+                    <clause>
+                        <variable>Student_level</variable>
+                        <term>Basic</term>
+                    </clause>
+                </then>
+            </consequent>
+        </rule>
+        <rule name="RULE-35" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+            <antecedent>
+                <clause>
+                    <variable>BCI_weighted</variable>
+                    <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Good</term>
+                    <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -908,23 +1047,27 @@
         <rule name="RULE-36" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>Medium</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
-                    <term>Low</term>
+                    <variable>JenPin_score</variable>
+                    <term>Needs_Improvement</term>
                 </clause>
                 <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Advanced</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -932,16 +1075,20 @@
         <rule name="RULE-37" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Medium</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
                     <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -956,9 +1103,33 @@
         <rule name="RULE-38" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>Medium</term>
                 </clause>
+                <clause>
+                    <variable>JenPin_score</variable>
+                    <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
+                </clause>
+            </antecedent>
+            <consequent>
+                <then>
+                    <clause>
+                        <variable>Student_level</variable>
+                        <term>Basic</term>
+                    </clause>
+                </then>
+            </consequent>
+        </rule>
+        <rule name="RULE-39" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+            <antecedent>
                 <clause>
                     <variable>BCI_weighted</variable>
                     <term>Medium</term>
@@ -967,29 +1138,13 @@
                     <variable>JenPin_score</variable>
                     <term>Good</term>
                 </clause>
-            </antecedent>
-            <consequent>
-                <then>
-                    <clause>
-                        <variable>Student_level</variable>
-                        <term>Intermediate</term>
-                    </clause>
-                </then>
-            </consequent>
-        </rule>
-        <rule name="RULE-39" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
-            <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Medium</term>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
-                    <term>Medium</term>
-                </clause>
-                <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -1004,16 +1159,20 @@
         <rule name="RULE-40" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>Medium</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
-                    <term>High</term>
+                    <variable>JenPin_score</variable>
+                    <term>Good</term>
                 </clause>
                 <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -1028,16 +1187,20 @@
         <rule name="RULE-41" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Medium</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>High</term>
+                    <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -1052,16 +1215,20 @@
         <rule name="RULE-42" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>Medium</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
-                    <term>High</term>
+                    <variable>JenPin_score</variable>
+                    <term>Good</term>
                 </clause>
                 <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -1076,23 +1243,27 @@
         <rule name="RULE-43" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>Medium</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
+                    <variable>JenPin_score</variable>
+                    <term>Good</term>
                 </clause>
                 <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Basic</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -1100,16 +1271,20 @@
         <rule name="RULE-44" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Medium</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
+                    <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -1124,23 +1299,27 @@
         <rule name="RULE-45" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>Medium</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
+                    <variable>JenPin_score</variable>
+                    <term>Good</term>
                 </clause>
                 <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Intermediate</term>
+                        <term>Advanced</term>
                     </clause>
                 </then>
             </consequent>
@@ -1148,16 +1327,48 @@
         <rule name="RULE-46" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
+                    <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
+                </clause>
+            </antecedent>
+            <consequent>
+                <then>
+                    <clause>
+                        <variable>Student_level</variable>
+                        <term>Basic</term>
+                    </clause>
+                </then>
+            </consequent>
+        </rule>
+        <rule name="RULE-47" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+            <antecedent>
+                <clause>
+                    <variable>BCI_weighted</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>JenPin_score</variable>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -1169,50 +1380,30 @@
                 </then>
             </consequent>
         </rule>
-        <rule name="RULE-47" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
-            <antecedent>
-                <clause>
-                    <variable>KUWA_score</variable>
-                    <term>High</term>
-                </clause>
-                <clause>
-                    <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
-                </clause>
-                <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Good</term>
-                </clause>
-            </antecedent>
-            <consequent>
-                <then>
-                    <clause>
-                        <variable>Student_level</variable>
-                        <term>Advanced</term>
-                    </clause>
-                </then>
-            </consequent>
-        </rule>
         <rule name="RULE-48" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
+                    <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Excellent</term>
                 </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
+                </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Advanced</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -1220,16 +1411,20 @@
         <rule name="RULE-49" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Low</term>
+                    <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -1244,23 +1439,27 @@
         <rule name="RULE-50" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Low</term>
+                    <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Good</term>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Advanced</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -1268,16 +1467,20 @@
         <rule name="RULE-51" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Low</term>
+                    <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -1292,16 +1495,20 @@
         <rule name="RULE-52" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
                     <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -1316,16 +1523,20 @@
         <rule name="RULE-53" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
                     <term>Medium</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Good</term>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -1340,10 +1551,6 @@
         <rule name="RULE-54" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
                     <term>Medium</term>
                 </clause>
@@ -1351,12 +1558,20 @@
                     <variable>JenPin_score</variable>
                     <term>Excellent</term>
                 </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
+                </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Advanced</term>
+                        <term>Proficient</term>
                     </clause>
                 </then>
             </consequent>
@@ -1364,10 +1579,6 @@
         <rule name="RULE-55" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
                     <term>High</term>
                 </clause>
@@ -1375,12 +1586,20 @@
                     <variable>JenPin_score</variable>
                     <term>Needs_Improvement</term>
                 </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
+                </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Intermediate</term>
+                        <term>Beginner</term>
                     </clause>
                 </then>
             </consequent>
@@ -1388,23 +1607,27 @@
         <rule name="RULE-56" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
                     <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Good</term>
+                    <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Advanced</term>
+                        <term>Beginner</term>
                     </clause>
                 </then>
             </consequent>
@@ -1412,23 +1635,27 @@
         <rule name="RULE-57" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
                     <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Advanced</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -1436,23 +1663,27 @@
         <rule name="RULE-58" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
+                    <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Intermediate</term>
+                        <term>Beginner</term>
                     </clause>
                 </then>
             </consequent>
@@ -1460,23 +1691,27 @@
         <rule name="RULE-59" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>High</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
+                    <variable>JenPin_score</variable>
+                    <term>Needs_Improvement</term>
                 </clause>
                 <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Good</term>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Advanced</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -1484,23 +1719,27 @@
         <rule name="RULE-60" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
+                    <variable>BCI_weighted</variable>
                     <term>High</term>
                 </clause>
                 <clause>
-                    <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
+                    <variable>JenPin_score</variable>
+                    <term>Needs_Improvement</term>
                 </clause>
                 <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Advanced</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -1508,23 +1747,27 @@
         <rule name="RULE-61" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
+                    <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Intermediate</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -1532,23 +1775,27 @@
         <rule name="RULE-62" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
+                    <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Good</term>
+                    <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Advanced</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -1556,23 +1803,27 @@
         <rule name="RULE-63" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_Low</term>
+                    <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <term>Needs_Improvement</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Proficient</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -1580,23 +1831,27 @@
         <rule name="RULE-64" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Low</term>
+                    <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Intermediate</term>
+                        <term>Beginner</term>
                     </clause>
                 </then>
             </consequent>
@@ -1604,23 +1859,27 @@
         <rule name="RULE-65" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Low</term>
+                    <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Advanced</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -1628,23 +1887,27 @@
         <rule name="RULE-66" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Low</term>
+                    <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Proficient</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -1652,23 +1915,27 @@
         <rule name="RULE-67" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Medium</term>
+                    <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Intermediate</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -1676,23 +1943,27 @@
         <rule name="RULE-68" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Medium</term>
+                    <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Advanced</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -1700,23 +1971,27 @@
         <rule name="RULE-69" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Medium</term>
+                    <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Excellent</term>
+                    <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Proficient</term>
+                        <term>Intermediate</term>
                     </clause>
                 </then>
             </consequent>
@@ -1724,23 +1999,27 @@
         <rule name="RULE-70" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
                     <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
                 </clause>
             </antecedent>
             <consequent>
                 <then>
                     <clause>
                         <variable>Student_level</variable>
-                        <term>Intermediate</term>
+                        <term>Basic</term>
                     </clause>
                 </then>
             </consequent>
@@ -1748,10 +2027,6 @@
         <rule name="RULE-71" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
                     <term>High</term>
                 </clause>
@@ -1759,53 +2034,13 @@
                     <variable>JenPin_score</variable>
                     <term>Good</term>
                 </clause>
-            </antecedent>
-            <consequent>
-                <then>
-                    <clause>
-                        <variable>Student_level</variable>
-                        <term>Advanced</term>
-                    </clause>
-                </then>
-            </consequent>
-        </rule>
-        <rule name="RULE-72" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
-            <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
-                    <variable>BCI_weighted</variable>
+                    <variable>Recognition_score</variable>
                     <term>High</term>
                 </clause>
                 <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Excellent</term>
-                </clause>
-            </antecedent>
-            <consequent>
-                <then>
-                    <clause>
-                        <variable>Student_level</variable>
-                        <term>Proficient</term>
-                    </clause>
-                </then>
-            </consequent>
-        </rule>
-        <rule name="RULE-73" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
-            <antecedent>
-                <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
-                    <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
-                    <variable>JenPin_score</variable>
-                    <term>Needs_Improvement</term>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -1817,19 +2052,23 @@
                 </then>
             </consequent>
         </rule>
-        <rule name="RULE-74" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+        <rule name="RULE-72" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
+                    <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Good</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
@@ -1841,19 +2080,247 @@
                 </then>
             </consequent>
         </rule>
-        <rule name="RULE-75" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+        <rule name="RULE-73" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
             <antecedent>
                 <clause>
-                    <variable>KUWA_score</variable>
-                    <term>Very_High</term>
-                </clause>
-                <clause>
                     <variable>BCI_weighted</variable>
-                    <term>Very_High</term>
+                    <term>High</term>
                 </clause>
                 <clause>
                     <variable>JenPin_score</variable>
                     <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
+                </clause>
+            </antecedent>
+            <consequent>
+                <then>
+                    <clause>
+                        <variable>Student_level</variable>
+                        <term>Basic</term>
+                    </clause>
+                </then>
+            </consequent>
+        </rule>
+        <rule name="RULE-74" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+            <antecedent>
+                <clause>
+                    <variable>BCI_weighted</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>JenPin_score</variable>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
+                </clause>
+            </antecedent>
+            <consequent>
+                <then>
+                    <clause>
+                        <variable>Student_level</variable>
+                        <term>Basic</term>
+                    </clause>
+                </then>
+            </consequent>
+        </rule>
+        <rule name="RULE-75" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+            <antecedent>
+                <clause>
+                    <variable>BCI_weighted</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>JenPin_score</variable>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Low</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
+                </clause>
+            </antecedent>
+            <consequent>
+                <then>
+                    <clause>
+                        <variable>Student_level</variable>
+                        <term>Intermediate</term>
+                    </clause>
+                </then>
+            </consequent>
+        </rule>
+        <rule name="RULE-76" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+            <antecedent>
+                <clause>
+                    <variable>BCI_weighted</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>JenPin_score</variable>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
+                </clause>
+            </antecedent>
+            <consequent>
+                <then>
+                    <clause>
+                        <variable>Student_level</variable>
+                        <term>Basic</term>
+                    </clause>
+                </then>
+            </consequent>
+        </rule>
+        <rule name="RULE-77" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+            <antecedent>
+                <clause>
+                    <variable>BCI_weighted</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>JenPin_score</variable>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
+                </clause>
+            </antecedent>
+            <consequent>
+                <then>
+                    <clause>
+                        <variable>Student_level</variable>
+                        <term>Intermediate</term>
+                    </clause>
+                </then>
+            </consequent>
+        </rule>
+        <rule name="RULE-78" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+            <antecedent>
+                <clause>
+                    <variable>BCI_weighted</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>JenPin_score</variable>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>Medium</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
+                </clause>
+            </antecedent>
+            <consequent>
+                <then>
+                    <clause>
+                        <variable>Student_level</variable>
+                        <term>Advanced</term>
+                    </clause>
+                </then>
+            </consequent>
+        </rule>
+        <rule name="RULE-79" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+            <antecedent>
+                <clause>
+                    <variable>BCI_weighted</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>JenPin_score</variable>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Low</term>
+                </clause>
+            </antecedent>
+            <consequent>
+                <then>
+                    <clause>
+                        <variable>Student_level</variable>
+                        <term>Intermediate</term>
+                    </clause>
+                </then>
+            </consequent>
+        </rule>
+        <rule name="RULE-80" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+            <antecedent>
+                <clause>
+                    <variable>BCI_weighted</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>JenPin_score</variable>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>Medium</term>
+                </clause>
+            </antecedent>
+            <consequent>
+                <then>
+                    <clause>
+                        <variable>Student_level</variable>
+                        <term>Advanced</term>
+                    </clause>
+                </then>
+            </consequent>
+        </rule>
+        <rule name="RULE-81" andMethod="MIN" orMethod="MAX" connector="AND" weight="1.0" networkAddress="127.0.0.1">
+            <antecedent>
+                <clause>
+                    <variable>BCI_weighted</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>JenPin_score</variable>
+                    <term>Excellent</term>
+                </clause>
+                <clause>
+                    <variable>Recognition_score</variable>
+                    <term>High</term>
+                </clause>
+                <clause>
+                    <variable>Semantic_score</variable>
+                    <term>High</term>
                 </clause>
             </antecedent>
             <consequent>
